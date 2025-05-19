@@ -1,201 +1,146 @@
 # ProsePilot AI
 
+A full-stack AI content generation tool built with Python and Streamlit that allows you to create and publish blog posts directly to Hashnode.
+
 ## Overview
 
-ProsePilot AI Agent is a full-stack AI content generation tool built with Python and Streamlit. This application allows you to quickly generate high-quality content such as blog posts, social media posts, product descriptions, and emails using OpenAI's powerful language models.
+ProsePilot AI Agent helps you rapidly generate high-quality content using OpenAI's powerful language models and publish it directly to your Hashnode blog with just a few clicks. Perfect for technical writers, developers, and content creators looking to streamline their content workflow.
 
 ## Features
 
-- **Multiple Content Types**: Generate blog posts, social media posts, product descriptions, emails, or custom content
-- **Tone Selection**: Choose from various tones like Professional, Casual, Enthusiastic, etc.
-- **Model Selection**: Choose between different OpenAI models
-- **Adjustable Parameters**: Control temperature and maximum word count
-- **Content Export**: Download generated content as TXT or MD files
-- **Conversation History**: Keep track of all your generated content
+- **AI-Powered Content Generation**: Create blog posts, tutorials, and technical articles with OpenAI
+- **Hashnode Direct Publishing**: Publish content as drafts directly to your Hashnode blog
+- **Content Type Customization**: Generate different types of content with various tones and lengths
+- **Multiple Export Options**: Download content as Markdown or text files
+- **Conversation History**: Track your content generation sessions
+- **User-Friendly Interface**: Clean, intuitive Streamlit interface
+
+## Requirements
+
+- Python 3.7+
+- OpenAI API key
+- Hashnode account with API key & Publication ID
 
 ## Setup Instructions
 
-### 1. Prerequisites
-
-- Python >=3.7
-- [OpenAI API key](https://openai.com/api/)
-- Git
-
-### 2. Installation
-
-1. Create a new directory for your project and navigate to it:
+### 1. Installation
 
 ```bash
-mkdir prosepilot-ai
+# Clone the repository or download the code
+git clone https://github.com/sheygs/prosepilot-ai.git
 cd prosepilot-ai
-```
 
-2. Create a virtual environment and activate it:
-
-```bash
-# On Windows
+# Create and activate a virtual environment
 python -m venv venv
-venv\Scripts\activate
+source venv/bin/activate  # On Windows, use: venv\Scripts\activate
 
-# On macOS/Linux
-python -m venv venv
-source venv/bin/activate
-```
-
-3. Install the dependencies:
-
-```bash
+# Install dependencies
 pip3 install -r requirements.txt
 ```
 
-4. Rename the `.env.sample` file to `.env` to store your OpenAI API key:
+### 2. API Keys Setup
+
+Rename `.env.sample` file to `.env` file in the project directory and populate the required placeholders:
 
 ```
-OPENAI_API_KEY=your_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
+HASHNODE_API_KEY=your_hashnode_api_key_here
+HASHNODE_PUBLICATION_ID=your_hashnode_publication_id_here
 ```
 
-### 3. Running the Application Locally
+### 3. Getting Your API Keys
 
-1. Make sure your virtual environment is activated.
+#### OpenAI API Key
 
-2. Run the Streamlit app:
+1. Go to [OpenAI Platform](https://platform.openai.com/)
+2. Sign up or log in
+3. Navigate to the API section
+4. Create a new API key
+
+#### Hashnode API Key
+
+1. Log in to [Hashnode](https://hashnode.com/)
+2. Go to your profile picture → Developer Settings
+3. Click "Generate New Token" in the Personal Access Tokens section
+4. Copy the token (you won't be able to see it again)
+
+#### Hashnode Publication ID (Required)
+
+1. Log in to [Hashnode](https://hashnode.com/)
+2. Go to your dashboard
+3. Click on "Publications" in the left sidebar
+4. Select your publication
+5. Look at the URL: `https://hashnode.com/dashboard/publications/[YOUR_PUBLICATION_ID]/...`
+6. Copy the ID portion from the URL
+
+### 4. Running the Application
 
 ```bash
 streamlit run app.py
 ```
 
-3. Your web browser should automatically open with the app running at `http://localhost:8501`.
+Your web browser should open automatically to `http://localhost:8501`.
 
-## Deployment Instructions
+## Usage Guide
 
-### Option 1: Deploy to Streamlit Cloud
+### Generating Content
 
-1. Create a GitHub repository and push your code:
+1. Enter your OpenAI API key in the sidebar
+2. Select content type, model, and temperature
+3. Enter a prompt describing what content you want to generate
+4. Select tone and maximum word count
+5. Click "Generate Content"
 
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/your-username/prosepilot-ai.git
-git push -u origin main
-```
+### Publishing to Hashnode
 
-2. Go to [Streamlit Cloud](https://streamlit.io/cloud) and sign in.
+1. Connect your Hashnode account by entering your API key and publication ID
+2. After generating content, provide a title and optional subtitle
+3. Search for and select relevant tags if desired
+4. Click "Publish to Hashnode"
+5. Your content will be created as a draft in your Hashnode publication
+6. Go to your Hashnode dashboard to review and publish the draft
 
-3. Click "New app" and select your GitHub repository, branch, and the main file path (`app.py`).
+## Important Notes
 
-4. Add your OpenAI API key as a secret in the Streamlit Cloud dashboard:
+- **Publication ID is Required**: You must provide a valid Hashnode publication ID to publish content
+- **Drafts Only**: The app creates drafts in Hashnode which you must manually publish from your Hashnode dashboard
+- **API Key Security**: Your API keys are masked in the interface for security
+- **Content Length**: Be mindful of token limits in the OpenAI models when generating long content
 
-   - Go to "Advanced settings" > "Secrets"
-   - Add your API key in this format:
+## Deployment Options
 
-   ```
-   OPENAI_API_KEY=your_api_key_here
-   ```
+### Streamlit Cloud
 
-5. Deploy your app. Streamlit Cloud will automatically build and deploy it.
+1. Push your code to GitHub
+2. Go to [Streamlit Cloud](https://streamlit.io/cloud)
+3. Deploy your app
+4. Add your API keys as secrets
 
-### Option 2: Deploy with Docker
-
-1. Create a `Dockerfile` in your project directory:
-
-```dockerfile
-FROM python:3.9-slim
-
-WORKDIR /app
-
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-
-EXPOSE 8501
-
-ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
-```
-
-2. Build the Docker image:
+### Docker
 
 ```bash
+# Build the Docker image
 docker build -t prosepilot-ai .
+
+# Run the container
+docker run -p 8501:8501 prosepilot-ai
 ```
-
-3. Run the container:
-
-```bash
-docker run -p 8501:8501 -e OPENAI_API_KEY=your_api_key_here prosepilot-ai
-```
-
-4. Access your app at `http://localhost:8501`.
-
-### Option 3: Deploy on AWS, Google Cloud, or Azure
-
-For more scalable and production-ready deployments, you can use cloud platforms:
-
-1. **AWS Elastic Beanstalk**:
-
-   - Install the EB CLI and initialize your application
-   - Create a `requirements.txt` file and include `streamlit` and other dependencies
-   - Configure environment variables for the API key
-   - Deploy with `eb deploy`
-
-2. **Google Cloud Run**:
-
-   - Use the Docker deployment approach
-   - Push the Docker image to Google Container Registry
-   - Deploy using Google Cloud Run with the appropriate environment variables
-
-3. **Azure App Service**:
-   - Create an App Service with Python support
-   - Set up deployment from GitHub or use Azure DevOps
-   - Configure environment variables for your API key
-
-## Usage
-
-1. Enter your OpenAI API key in the sidebar (or set it in the `.env` file).
-2. Select the content type you want to generate.
-3. Choose the AI model and adjust the temperature.
-4. Enter your prompt describing what content you want.
-5. Select the tone and maximum word count.
-6. Click "Generate Content" to create your content.
-7. Use the buttons to copy or download your generated content.
-8. View your conversation history in the expandable section.
-
-## Security Considerations
-
-- Do not hardcode your OpenAI API key in your code
-- Use environment variables for sensitive information
-- Consider implementing user authentication for multi-user deployments
-- Store conversation history securely if implementing persistence
 
 ## Troubleshooting
 
-1. **API Key Issues**: If you encounter errors related to the API key, make sure:
-
-   - Your API key is valid
-   - You have sufficient credits in your OpenAI account
-   - You have proper permissions for the models you're trying to use
-
-2. **OpenAI Client Version**: If you receive errors about function calls or parameters, ensure you're using the right OpenAI client version.
-
-3. **Model Availability**: Not all OpenAI models may be available to your account.
-
-4. **Streamlit Deployment Issues**:
-   - Check if your dependencies are correctly specified
-   - Verify that your environmental variables are properly set
-   - Examine deployment logs for specific error messages
-
-## Next Steps and Improvements
-
-1. Add user authentication for multiple users
-2. Implement content templates
-3. Add more advanced customization options
-4. Integrate with storage solutions
-5. Add content revision capabilities
-6. Implement content scheduling
-7. Add SEO optimization features
+- **Authentication Errors**: Ensure your API keys have the correct permissions
+- **Publication ID Issues**: Verify you're using the correct publication ID format
+- **Content Generation Errors**: Check OpenAI API quota and token limits
+- **Hashnode API Changes**: The Hashnode API may change over time; check for updates
 
 ## License
 
 This project is available under the MIT License.
+
+## Contributing
+
+Contributions are welcome! Feel free to submit issues or pull requests.
+
+---
+
+Created with ❤️ using Python, Streamlit, OpenAI, and Hashnode API.
