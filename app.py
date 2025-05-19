@@ -11,7 +11,7 @@ load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY", "")
 
 # Set up page configuration
-st.set_page_config(page_title="Content AI Agent", layout="wide")
+st.set_page_config(page_title="ProsePilot AI", layout="wide")
 
 # Initialize session state variables if they don't exist
 if "generated_content" not in st.session_state:
@@ -21,7 +21,7 @@ if "conversation_history" not in st.session_state:
 
 # Sidebar for API configuration
 with st.sidebar:
-    st.title("Content AI Agent")
+    st.title("ProsePilot AI Agent")
     api_key = st.text_input("Enter OpenAI API Key", value=openai_api_key, type="password")
 
     # Content type selection
@@ -49,7 +49,7 @@ with st.sidebar:
         st.session_state.generated_content = ""
 
 # Main app interface
-st.title("Content Generator AI Agent")
+st.title("ProsePilot AI")
 
 # Input section
 prompt_col1, prompt_col2 = st.columns([3, 1])
@@ -149,4 +149,4 @@ if st.session_state.conversation_history:
 
 # Footer
 st.markdown("---")
-st.caption("Content AI Agent - Created with Streamlit and OpenAI")
+st.caption("ProsePilot AI - Created with Streamlit and OpenAI")
