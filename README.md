@@ -42,23 +42,13 @@ python -m venv venv
 source venv/bin/activate
 ```
 
-3. Create a file named `requirements.txt` with these dependencies:
-
-```
-streamlit>=1.22.0
-openai>=0.27.0
-python-dotenv>=1.0.0
-```
-
-4. Install the dependencies:
+3. Install the dependencies:
 
 ```bash
 pip3 install -r requirements.txt
 ```
 
-5. Create a file named `app.py` and paste the entire code from the provided application.
-
-6. (Optional) Create a `.env` file to store your OpenAI API key:
+4. Rename the `.env.sample` file to `.env` to store your OpenAI API key:
 
 ```
 OPENAI_API_KEY=your_api_key_here
