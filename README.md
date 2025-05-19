@@ -1,180 +1,201 @@
 # ProsePilot AI
 
-An autonomous AI agent system for content generation and multi-platform publication.
-
-![ProsePilot AI Logo](https://via.placeholder.com/800x200?text=ProsePilot+AI)
-
 ## Overview
 
-ProsePilot AI is an advanced content generation and publication system that automates the entire content lifecycle from ideation to performance analysis. This autonomous AI agent bridges the gap between content creation and distribution by integrating sophisticated language models with multi-platform publishing capabilities.
+ProsePilot AI Agent is a full-stack AI content generation tool built with Python and Streamlit. This application allows you to quickly generate high-quality content such as blog posts, social media posts, product descriptions, and emails using OpenAI's powerful language models.
 
-## Key Features
+## Features
 
-### 🧠 Advanced Content Generation Engine
+- **Multiple Content Types**: Generate blog posts, social media posts, product descriptions, emails, or custom content
+- **Tone Selection**: Choose from various tones like Professional, Casual, Enthusiastic, etc.
+- **Model Selection**: Choose between different OpenAI models
+- **Adjustable Parameters**: Control temperature and maximum word count
+- **Content Export**: Download generated content as TXT or MD files
+- **Conversation History**: Keep track of all your generated content
 
-- **AI-Powered Writing**: Leverages state-of-the-art language models for creating diverse content formats
-- **Knowledge Integration**: Incorporates domain knowledge and real-time research
-- **Brand Voice Control**: Maintains consistent tone and style across all content
+## Setup Instructions
 
-### 🚀 Autonomous Publication Pipeline
+### 1. Prerequisites
 
-- **Multi-Platform Publishing**: Seamlessly publishes to WordPress, Medium, social media, and more
-- **Intelligent Scheduling**: Optimizes posting times for maximum engagement
-- **Content Adaptation**: Automatically formats content for different platforms
+- Python >=3.7
+- [OpenAI API key](https://openai.com/api/)
+- Git
 
-### 📊 Smart Analytics & Optimization
+### 2. Installation
 
-- **Performance Tracking**: Monitors content engagement across all platforms
-- **A/B Testing**: Automatically tests different content variants
-- **Continuous Improvement**: Self-optimizes based on performance data
+1. Create a new directory for your project and navigate to it:
 
-### 💼 Enterprise-Grade Controls
-
-- **Approval Workflows**: Configurable human-in-the-loop review processes
-- **Compliance Checks**: Content screening for brand guidelines and regulatory requirements
-- **Access Management**: Role-based permissions for team collaboration
-
-## System Architecture
-
-```
-┌─────────────────────┐     ┌─────────────────────┐     ┌─────────────────────┐
-│                     │     │                     │     │                     │
-│  Content Generation │────▶│  Publication        │────▶│  Analytics &        │
-│  Engine             │     │  Pipeline           │     │  Optimization       │
-│                     │     │                     │     │                     │
-└─────────────────────┘     └─────────────────────┘     └─────────────────────┘
-         ▲                            ▲                           │
-         │                            │                           │
-         └────────────────────────────┴───────────────────────────┘
-                                Feedback Loop
+```bash
+mkdir prosepilot-ai
+cd prosepilot-ai
 ```
 
-## Getting Started
+2. Create a virtual environment and activate it:
 
-### Prerequisites
+```bash
+# On Windows
+python -m venv venv
+venv\Scripts\activate
 
-- Python 3.9+
-- Node.js 22+
-- PostgreSQL
-- Access to LLM API (OpenAI, Anthropic, or similar)
+# On macOS/Linux
+python -m venv venv
+source venv/bin/activate
+```
 
-### Installation
+3. Install the dependencies:
 
-1. Clone the repository:
+```bash
+pip3 install -r requirements.txt
+```
 
-   ```bash
-   git clone https://github.com/sheygs/prosepilot-ai.git
-   cd prosepilot-ai
+4. Rename the `.env.sample` file to `.env` to store your OpenAI API key:
+
+```
+OPENAI_API_KEY=your_api_key_here
+```
+
+### 3. Running the Application Locally
+
+1. Make sure your virtual environment is activated.
+
+2. Run the Streamlit app:
+
+```bash
+streamlit run app.py
+```
+
+3. Your web browser should automatically open with the app running at `http://localhost:8501`.
+
+## Deployment Instructions
+
+### Option 1: Deploy to Streamlit Cloud
+
+1. Create a GitHub repository and push your code:
+
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/your-username/prosepilot-ai.git
+git push -u origin main
+```
+
+2. Go to [Streamlit Cloud](https://streamlit.io/cloud) and sign in.
+
+3. Click "New app" and select your GitHub repository, branch, and the main file path (`app.py`).
+
+4. Add your OpenAI API key as a secret in the Streamlit Cloud dashboard:
+
+   - Go to "Advanced settings" > "Secrets"
+   - Add your API key in this format:
+
+   ```
+   OPENAI_API_KEY=your_api_key_here
    ```
 
-2. Install backend dependencies:
+5. Deploy your app. Streamlit Cloud will automatically build and deploy it.
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+### Option 2: Deploy with Docker
 
-3. Install frontend dependencies:
+1. Create a `Dockerfile` in your project directory:
 
-   ```bash
-   cd frontend
-   npm install
-   cd ..
-   ```
+```dockerfile
+FROM python:3.9-slim
 
-4. Configure environment variables:
+WORKDIR /app
 
-   ```bash
-   cp .env.example .env
-   # Edit .env with your API keys and configuration
-   ```
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-5. Initialize the database:
+COPY . .
 
-   ```bash
-   python scripts/init_db.py
-   ```
+EXPOSE 8501
 
-6. Run the development server:
-   ```bash
-   python main.py
-   ```
+ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+```
 
-## Configuration
+2. Build the Docker image:
 
-### API Connections
+```bash
+docker build -t prosepilot-ai .
+```
 
-ProsePilot AI requires API connections to:
+3. Run the container:
 
-- Language Model Provider (OpenAI, Anthropic, etc.)
-- Publishing Platforms (WordPress, Medium, LinkedIn, etc.)
-- Analytics Services (Google Analytics, custom tracking)
+```bash
+docker run -p 8501:8501 -e OPENAI_API_KEY=your_api_key_here prosepilot-ai
+```
 
-Configuration templates are provided in the `config/` directory.
+4. Access your app at `http://localhost:8501`.
 
-### Content Templates
+### Option 3: Deploy on AWS, Google Cloud, or Azure
 
-Define content templates in `templates/` directory:
+For more scalable and production-ready deployments, you can use cloud platforms:
 
-- Blog post structures
-- Social media formats
-- Email marketing templates
+1. **AWS Elastic Beanstalk**:
 
-### Customization
+   - Install the EB CLI and initialize your application
+   - Create a `requirements.txt` file and include `streamlit` and other dependencies
+   - Configure environment variables for the API key
+   - Deploy with `eb deploy`
 
-- **Brand Voice**: Train on your existing content to capture brand voice
-- **Publishing Rules**: Configure approval workflows and publication rules
-- **Analytics Integration**: Connect to your existing analytics tools
+2. **Google Cloud Run**:
+
+   - Use the Docker deployment approach
+   - Push the Docker image to Google Container Registry
+   - Deploy using Google Cloud Run with the appropriate environment variables
+
+3. **Azure App Service**:
+   - Create an App Service with Python support
+   - Set up deployment from GitHub or use Azure DevOps
+   - Configure environment variables for your API key
 
 ## Usage
 
-### Content Creation
+1. Enter your OpenAI API key in the sidebar (or set it in the `.env` file).
+2. Select the content type you want to generate.
+3. Choose the AI model and adjust the temperature.
+4. Enter your prompt describing what content you want.
+5. Select the tone and maximum word count.
+6. Click "Generate Content" to create your content.
+7. Use the buttons to copy or download your generated content.
+8. View your conversation history in the expandable section.
 
-```python
-from prosepilot import ProsePilot
+## Security Considerations
 
-# Initialize ContentForge agent
-agent = ProsePilot(config_path="config/default.yml")
+- Do not hardcode your OpenAI API key in your code
+- Use environment variables for sensitive information
+- Consider implementing user authentication for multi-user deployments
+- Store conversation history securely if implementing persistence
 
-# Generate and publish content
-result = agent.create_content(
-    topic="AI in Marketing",
-    content_type="blog_post",
-    keywords=["artificial intelligence", "marketing automation", "content strategy"],
-    publish_to=["wordpress", "medium", "linkedin"],
-    schedule_time="optimal"  # AI determines best time or specify datetime
-)
+## Troubleshooting
 
-# Access result
-print(f"Content published to {result.platforms}")
-print(f"Scheduled for {result.scheduled_time}")
-print(f"Content ID: {result.content_id}")
-```
+1. **API Key Issues**: If you encounter errors related to the API key, make sure:
 
-### Content Performance Monitoring
+   - Your API key is valid
+   - You have sufficient credits in your OpenAI account
+   - You have proper permissions for the models you're trying to use
 
-```python
-# Get performance metrics
-performance = agent.get_performance(content_id="a1b2c3d4")
-print(f"Total engagement: {performance.total_engagement}")
-print(f"Platform breakdown: {performance.platform_metrics}")
+2. **OpenAI Client Version**: If you receive errors about function calls or parameters, ensure you're using the right OpenAI client version.
 
-# Optimize existing content
-optimization = agent.optimize_content(content_id="a1b2c3d4")
-print(f"Optimization recommendations: {optimization.recommendations}")
-print(f"Auto-applied improvements: {optimization.applied_changes}")
-```
+3. **Model Availability**: Not all OpenAI models may be available to your account.
 
-## Contributing
+4. **Streamlit Deployment Issues**:
+   - Check if your dependencies are correctly specified
+   - Verify that your environmental variables are properly set
+   - Examine deployment logs for specific error messages
 
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+## Next Steps and Improvements
+
+1. Add user authentication for multiple users
+2. Implement content templates
+3. Add more advanced customization options
+4. Integrate with storage solutions
+5. Add content revision capabilities
+6. Implement content scheduling
+7. Add SEO optimization features
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgements
-
-- Built with [OpenAI API](https://openai.com/blog/openai-api/) and [Anthropic Claude API](https://www.anthropic.com/product)
-- Inspired by the gap in truly autonomous content publication systems
-
-_ProsePilot AI: Content that writes and publishes itself._
+This project is available under the MIT License.
