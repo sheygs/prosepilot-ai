@@ -76,7 +76,7 @@ HASHNODE_PUBLICATION_ID=your_hashnode_publication_id_here
 ### 4. Running the Application
 
 ```bash
-streamlit run app.py
+streamlit run main.py
 ```
 
 Your web browser should open automatically to `http://localhost:8501`.
