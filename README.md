@@ -1,6 +1,6 @@
 # ProsePilot AI
 
-A full-stack AI content generation tool built with Python and Streamlit that allows you to create and publish blog posts directly to Hashnode.
+A full-stack AI content generation tool built with Python and Streamlit that allows you to create and publish blog posts directly to publishing platforms.
 
 ## Overview
 
@@ -23,7 +23,8 @@ ProsePilot AI Agent helps you rapidly generate high-quality content using OpenAI
 
 - Python 3.7+
 - OpenAI API key
-- Hashnode account with API key & Publication ID
+- Hashnode Account API key
+- Hashnode Publication ID
 
 ## Setup Instructions
 
