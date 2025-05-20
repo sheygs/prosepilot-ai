@@ -6,6 +6,10 @@ A full-stack AI content generation tool built with Python and Streamlit that all
 
 ProsePilot AI Agent helps you rapidly generate high-quality content using OpenAI's powerful language models and publish it directly to your Hashnode blog with just a few clicks. Perfect for technical writers, developers, and content creators looking to streamline their content workflow.
 
+## Architecture
+
+![ProsePilot Architecture](./architecture.png)
+
 ## Features
 
 - **AI-Powered Content Generation**: Create blog posts, tutorials, and technical articles with OpenAI
