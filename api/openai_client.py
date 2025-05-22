@@ -76,6 +76,8 @@ class EnhancedOpenAIClient:
                 - Optimize for Hashnode platform
 
                 Focus on creating high-quality, professional content that follows industry best practices.
+
+                Remember: This is a TEXT-ONLY content generation. No images, no image sources, no visual references.
             """
 
             full_prompt = f"Create a {content_type} about: {prompt}"
