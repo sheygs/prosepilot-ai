@@ -1,6 +1,6 @@
 # ProsePilot AI
 
-A full-stack AI content generation tool built with Python and Streamlit that combines RAG (Retrieval-Augmented Generation) with OpenAI's language models to create professional, high-quality content and publish directly to publishing platforms.
+ProsePilot is an AI content generation tool built with Python and Streamlit that combines RAG (Retrieval-Augmented Generation) with OpenAI's language models to create professional, high-quality content and publish directly to publishing platforms.
 
 ## 🌫️ Overview
 
