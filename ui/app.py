@@ -6,7 +6,7 @@ from ui.components.content_generator import render_content_generator, render_con
 from ui.components.publisher import render_publisher
 
 
-def setup_page():
+def setup_page() -> None:
     """Configure the Streamlit page settings"""
     st.set_page_config(
         page_title=PAGE_TITLE,

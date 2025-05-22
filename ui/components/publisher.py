@@ -3,7 +3,7 @@ from api.hashnode_client import HashnodeClient
 from utils.masking import mask_sensitive_id
 
 
-def render_publisher(user_prompt):
+def render_publisher(user_prompt) -> None:
     """Render the Hashnode publishing UI"""
     if not st.session_state.hashnode_user_info:
         st.info("Connect to Hashnode in the sidebar to enable publishing.")
