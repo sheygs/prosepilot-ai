@@ -1,5 +1,6 @@
 import streamlit as st
-from config.settings import OPENAI_API_KEY, HASHNODE_API_KEY, HASHNODE_PUBLICATION_ID
+from config.settings import HASHNODE_API_KEY, HASHNODE_PUBLICATION_ID
+
 
 def initialize_session_state():
     """Initialize all session state variables"""
