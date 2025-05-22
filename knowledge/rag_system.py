@@ -4,7 +4,7 @@ from typing import List, Dict, Any
 from .content_knowledge import WRITING_GUIDELINES, TONE_GUIDELINES, CONTENT_EXAMPLES, SEO_KEYWORDS
 
 
-class SimpleRAGSystem:
+class RAGSystem:
     """
     Simple RAG implementation using keyword matching and content relevance.
     Can be enhanced later with vector embeddings for more sophisticated retrieval.
@@ -40,26 +40,6 @@ class SimpleRAGSystem:
 
         return guidelines
 
-    # deprecated
-    def retrieve_seo_keywords_(self, content_type: str, topic: str) -> List[str]:
-        """Retrieve relevant SEO keywords based on content type and topic"""
-        keywords = []
-
-        # Add general keywords
-        keywords.extend(self.knowledge_base["seo_keywords"]["general"])
-
-        # Add technical keywords if applicable
-        if content_type.lower() in ["technical article", "tutorial"]:
-            keywords.extend(self.knowledge_base["seo_keywords"]["technical"])
-
-        # Add content creation keywords for blog posts
-        if content_type.lower() == "blog post":
-            keywords.extend(
-                self.knowledge_base["seo_keywords"]["content_creation"])
-
-        return keywords[:10]  # Return top 10 relevant keywords
-
-    # updated method
     def retrieve_seo_keywords(self, content_type: str, topic: str) -> List[str]:
         """Retrieve relevant SEO keywords based on content type and topic"""
         keywords = []
@@ -152,57 +132,6 @@ class SimpleRAGSystem:
             content_type, {})
         return guidelines.get("hashnode_specific", [])
 
-    # deprecated
-    def build_context_prompt_(self, content_type: str, tone: str, topic: str) -> str:
-        """Build enhanced context for content generation"""
-        guidelines = self.retrieve_content_guidelines(content_type, tone)
-        seo_keywords = self.retrieve_seo_keywords(content_type, topic)
-        hashnode_tips = self.retrieve_hashnode_optimization(content_type)
-
-        context_parts = []
-
-        # Add content structure
-        if "content_guidelines" in guidelines and "structure" in guidelines["content_guidelines"]:
-            context_parts.append(
-                f"STRUCTURE:\n{guidelines['content_guidelines']['structure']}")
-
-        # Add best practices
-        if "content_guidelines" in guidelines and "best_practices" in guidelines["content_guidelines"]:
-            practices = "\n".join(
-                [f"- {practice}" for practice in guidelines["content_guidelines"]["best_practices"]])
-            context_parts.append(f"BEST PRACTICES:\n{practices}")
-
-        # Add tone guidelines
-        if "tone_guidelines" in guidelines:
-            tone_chars = "\n".join(
-                [f"- {char}" for char in guidelines["tone_guidelines"]["characteristics"]])
-            context_parts.append(f"TONE CHARACTERISTICS:\n{tone_chars}")
-
-            tone_avoid = "\n".join(
-                [f"- {avoid}" for avoid in guidelines["tone_guidelines"]["avoid"]])
-            context_parts.append(f"AVOID:\n{tone_avoid}")
-
-        # Add SEO guidelines
-        if "content_guidelines" in guidelines and "seo_tips" in guidelines["content_guidelines"]:
-            seo_tips = "\n".join(
-                [f"- {tip}" for tip in guidelines["content_guidelines"]["seo_tips"]])
-            context_parts.append(f"SEO OPTIMIZATION:\n{seo_tips}")
-
-        # Add Hashnode-specific tips
-        if hashnode_tips:
-            hashnode_formatted = "\n".join(
-                [f"- {tip}" for tip in hashnode_tips])
-            context_parts.append(
-                f"HASHNODE OPTIMIZATION:\n{hashnode_formatted}")
-
-        # Add relevant keywords
-        if seo_keywords:
-            keyword_list = ", ".join(seo_keywords)
-            context_parts.append(f"RELEVANT KEYWORDS: {keyword_list}")
-
-        return "\n\n".join(context_parts)
-
-    # updated build_context_prompt method
     def build_context_prompt(self, content_type: str, tone: str, topic: str) -> str:
         """Build enhanced context for content generation"""
         guidelines = self.retrieve_content_guidelines(content_type, tone)

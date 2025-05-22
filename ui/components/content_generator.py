@@ -3,119 +3,18 @@ from datetime import datetime
 from models.content import ContentItem
 from api.openai_client import EnhancedOpenAIClient
 
-# deprecated
-
-
-def render_content_generator_(api_key, content_type, model, temperature):
-    """Render the content generation UI with RAG enhancement"""
-    st.markdown("""
-        <h1 style='font-size: 28px; font-family: "Playfair Display", serif; font-weight: 400; letter-spacing: 0.5px; color: #2E5077;'>
-            From Concept to Published Content in mins 🚀
-        </h1>
-        """, unsafe_allow_html=True)
-
-    # Input section
-    prompt_col1, prompt_col2 = st.columns([3, 1])
-
-    with prompt_col1:
-        user_prompt = st.text_area(
-            "What content would you like to generate?", height=100)
-
-    with prompt_col2:
-        st.write("Content Parameters")
-        tone = st.selectbox(
-            "Tone", ["Professional", "Casual", "Enthusiastic", "Informative", "Technical"])
-        max_length = st.number_input(
-            "Max Words", min_value=50, max_value=2000, value=500, step=50)
-
-        # RAG enhancement indicator
-        st.info("🧠 RAG Enhancement: ON\nUsing writing best practices and guidelines")
-
-    # Generate button
-    generate_pressed = st.button("Generate Enhanced Content")
-
-    # Generate content when the button is pressed
-    if generate_pressed and user_prompt:
-        with st.spinner("Generating content with RAG enhancement..."):
-            openai_client = EnhancedOpenAIClient(api_key)
-            generated_text = openai_client.generate_content(
-                user_prompt, content_type, tone, max_length, model, temperature
-            )
-
-            # Analyze content
-            content_analysis = openai_client.get_content_analysis(
-                generated_text, content_type)
-
-            st.session_state.generated_content = generated_text
-            st.session_state.content_analysis = content_analysis
-
-            # Add to conversation history
-            content_item = ContentItem.create_from_generation(
-                user_prompt, content_type, tone, generated_text
-            )
-            st.session_state.conversation_history.append(content_item.__dict__)
-
-    # Display generated content
-    if st.session_state.generated_content:
-        st.subheader("Generated Content")
-        st.markdown(st.session_state.generated_content)
-
-        # Show content analysis
-        if hasattr(st.session_state, 'content_analysis'):
-            with st.expander("Content Analysis", expanded=False):
-                analysis = st.session_state.content_analysis
-
-                col1, col2, col3, col4 = st.columns(4)
-                with col1:
-                    st.metric("Word Count", analysis["word_count"])
-                with col2:
-                    st.metric(
-                        "Structure", "✅" if analysis["has_structure"] else "❌")
-                with col3:
-                    st.metric(
-                        "SEO Ready", "✅" if analysis["seo_optimized"] else "❌")
-                with col4:
-                    st.metric("Hashnode Ready",
-                              "✅" if analysis["hashnode_ready"] else "❌")
-
-        # Actions row
-        col1, col2, col3 = st.columns(3)
-
-        with col1:
-            st.button("Copy to Clipboard",
-                      help="Copy the generated content to clipboard")
-
-        with col2:
-            st.download_button(
-                label="Download as TXT",
-                data=st.session_state.generated_content,
-                file_name=f"{content_type.lower().replace(' ', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt",
-                mime="text/plain"
-            )
-
-        with col3:
-            st.download_button(
-                label="Download as MD",
-                data=st.session_state.generated_content,
-                file_name=f"{content_type.lower().replace(' ', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md",
-                mime="text/markdown"
-            )
-
-    # Return the current state for use in other components
-    return {
-        "user_prompt": user_prompt if 'user_prompt' in locals() else "",
-        "tone": tone if 'tone' in locals() else "Professional",
-        "max_length": max_length if 'max_length' in locals() else 500
-    }
-
 
 def render_content_generator(api_key, content_type, model, temperature):
     """Render the content generation UI with RAG enhancement"""
-    st.markdown("""
-        <h1 style='font-size: 28px; font-family: "Playfair Display", serif; font-weight: 400; letter-spacing: 0.5px; color: #fff;'>
-            From Concept to Published Content in mins 🚀
-        </h1>
-        """, unsafe_allow_html=True)
+
+    st.markdown(
+        """
+         <h1 style='font-size: 28px; font-family: "Playfair Display", serif; font-weight: 400; letter-spacing: 0.5px; color: #fff;'>
+             From Concept to Published Content in mins 🚀
+         </h1>
+        """,
+        unsafe_allow_html=True
+    )
 
     # Input section
     prompt_col1, prompt_col2 = st.columns([3, 1])
@@ -135,7 +34,7 @@ def render_content_generator(api_key, content_type, model, temperature):
         st.info("🧠 RAG Enhancement: ON\nUsing writing best practices and guidelines")
 
     # Generate button
-    generate_pressed = st.button("Generate Enhanced Content")
+    generate_pressed = st.button("Generate Content")
 
     # Generate content when the button is pressed
     if generate_pressed and user_prompt:

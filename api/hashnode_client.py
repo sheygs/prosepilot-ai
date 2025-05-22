@@ -3,6 +3,7 @@ import streamlit as st
 from utils.masking import mask_publication_ids, mask_sensitive_id
 from config.settings import HASHNODE_GRAPHQL_URL
 
+
 class HashnodeClient:
     def __init__(self, api_key=None):
         self.api_key = api_key
@@ -22,12 +23,12 @@ class HashnodeClient:
             return False
 
         query = """
-        query {
-            me {
-                username
-                name
+            query {
+                me  {
+                    username
+                    name
+                }
             }
-        }
         """
 
         try:
@@ -57,19 +58,19 @@ class HashnodeClient:
     def get_publications(self):
         """Get user's publications"""
         query = """
-        query {
-            me {
-                publications {
-                    edges {
-                        node {
-                            id
-                            title
-                            isDefault
+            query {
+                me {
+                    publications {
+                        edges {
+                            node {
+                                id
+                                title
+                                isDefault
+                            }
                         }
                     }
                 }
             }
-        }
         """
 
         try:
@@ -93,7 +94,8 @@ class HashnodeClient:
                             "isDefault": pub["node"].get("isDefault", False)
                         })
 
-                    pub_list.sort(key=lambda x: (0 if x["isDefault"] else 1, x["title"]))
+                    pub_list.sort(key=lambda x: (
+                        0 if x["isDefault"] else 1, x["title"]))
 
                     return pub_list
                 else:
@@ -110,13 +112,13 @@ class HashnodeClient:
     def get_tags(self, search_text=""):
         """Get tags matching search text"""
         query = """
-        query getTags($page: Int!, $query: String) {
-            tagCategories(page: $page, query: $query) {
-                _id
-                name
-                slug
+            query getTags($page: Int!, $query: String) {
+                tagCategories(page: $page, query: $query) {
+                    _id
+                    name
+                    slug
+                }
             }
-        }
         """
 
         variables = {
@@ -135,6 +137,7 @@ class HashnodeClient:
                 result = response.json()
                 if "data" in result and "tagCategories" in result["data"]:
                     return result["data"]["tagCategories"]
+
             return []
         except Exception as e:
             st.error(f"Error getting Hashnode tags: {str(e)}")
@@ -143,7 +146,8 @@ class HashnodeClient:
     def create_draft(self, title, content, tags=None, publication_id=None, subtitle=None):
         """Create a draft post on Hashnode"""
         if not publication_id or not publication_id.strip():
-            st.error("Publication ID is required. Please provide a valid publication ID.")
+            st.error(
+                "Publication ID is required. Please provide a valid publication ID.")
             return False
 
         if tags is None:
@@ -160,23 +164,24 @@ class HashnodeClient:
             input_vars["subtitle"] = subtitle
 
         mutation = """
-        mutation createDraft($input: CreateDraftInput!){
-            createDraft(input: $input) {
-                draft {
-                    id
-                    title
-                    slug
-                    updatedAt
+            mutation createDraft($input: CreateDraftInput!){
+                createDraft(input: $input) {
+                    draft {
+                        id
+                        title
+                        slug
+                        updatedAt
+                    }
                 }
             }
-        }
         """
 
         try:
             # Create a copy with masked publication ID for display
             debug_vars = input_vars.copy()
             if "publicationId" in debug_vars:
-                debug_vars["publicationId"] = mask_sensitive_id(debug_vars["publicationId"])
+                debug_vars["publicationId"] = mask_sensitive_id(
+                    debug_vars["publicationId"])
             st.write("Sending input variables:", debug_vars)
 
             response = requests.post(

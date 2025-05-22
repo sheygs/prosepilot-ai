@@ -2,7 +2,7 @@ from typing import Any, Dict
 import openai
 import streamlit as st
 from config.settings import OPENAI_API_KEY
-from knowledge.rag_system import SimpleRAGSystem
+from knowledge.rag_system import RAGSystem
 
 
 class OpenAIClient:
@@ -43,7 +43,7 @@ class OpenAIClient:
 class EnhancedOpenAIClient:
     def __init__(self, api_key=None):
         self.api_key = api_key or OPENAI_API_KEY
-        self.rag_system = SimpleRAGSystem()
+        self.rag_system = RAGSystem()
 
     def generate_content(self, prompt, content_type, tone, max_length, model, temperature):
         """generate content using RAG-enhanced prompting"""
@@ -96,23 +96,6 @@ class EnhancedOpenAIClient:
         except Exception as e:
             return f"Error generating content: {str(e)}"
 
-    # deprecated
-    def get_content_analysis_(self, content: str, content_type: str) -> Dict[str, Any]:
-        """analyze generated content against RAG guidelines"""
-        guidelines = self.rag_system.retrieve_content_guidelines(
-            content_type, "Professional")
-
-        analysis = {
-            "word_count": len(content.split()),
-            "has_structure": self._check_structure(content, content_type),
-            "seo_optimized": self._check_seo_elements(content),
-            "tone_appropriate": True,  # simplified check
-            "hashnode_ready": self._check_hashnode_formatting(content)
-        }
-
-        return analysis
-
-    #  (Updated get_content_analysis method)
     def get_content_analysis(self, content: str, content_type: str) -> Dict[str, Any]:
         """Analyze generated content against RAG guidelines"""
         guidelines = self.rag_system.retrieve_content_guidelines(
@@ -229,15 +212,6 @@ class EnhancedOpenAIClient:
         )
 
         return int(overall_score)
-
-    # deprecated
-    def _check_structure_(self, content: str, content_type: str) -> bool:
-        """check if content follows recommended structure"""
-        # simplified structure check - count headers
-        headers = content.count('#')
-        return headers >= 3  # Basic structure check
-
-    # api/openai_client.py (Updated _check_structure method)
 
     def _check_structure(self, content: str, content_type: str) -> bool:
         """Check if content follows recommended structure for the specific content type"""

@@ -5,6 +5,7 @@ from ui.components.sidebar import render_sidebar
 from ui.components.content_generator import render_content_generator, render_conversation_history
 from ui.components.publisher import render_publisher
 
+
 def setup_page():
     """Configure the Streamlit page settings"""
     st.set_page_config(
@@ -12,6 +13,7 @@ def setup_page():
         page_icon=PAGE_ICON,
         layout=LAYOUT
     )
+
 
 def run_app():
     """Main application entry point"""
@@ -40,5 +42,5 @@ def run_app():
     render_conversation_history()
 
     # Footer
-    st.markdown("---")
+    st.markdown("------")
     st.caption("Made with ❤️ by ProsePilot AI")

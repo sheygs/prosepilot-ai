@@ -1,13 +1,15 @@
 import streamlit as st
 from api.hashnode_client import HashnodeClient
-from config.settings import OPENAI_API_KEY, HASHNODE_API_KEY, HASHNODE_PUBLICATION_ID
+from config.settings import OPENAI_API_KEY
+
 
 def render_sidebar():
     """Render the sidebar UI"""
     st.sidebar.title("ProsePilot AI")
 
     # API key input
-    api_key = st.sidebar.text_input("Enter OpenAI API Key", value=OPENAI_API_KEY, type="password")
+    api_key = st.sidebar.text_input(
+        "Enter OpenAI API Key", value=OPENAI_API_KEY, type="password")
 
     # Content type selection
     content_type = st.sidebar.selectbox(
@@ -26,7 +28,8 @@ def render_sidebar():
     )
 
     # Temperature slider
-    temperature = st.sidebar.slider("Temperature", min_value=0.0, max_value=1.0, value=0.7, step=0.1)
+    temperature = st.sidebar.slider(
+        "Temperature", min_value=0.0, max_value=1.0, value=0.7, step=0.1)
 
     # Hashnode connection UI
     render_hashnode_connection()
@@ -44,13 +47,16 @@ def render_sidebar():
         "temperature": temperature
     }
 
+
 def render_hashnode_connection():
     """Render the Hashnode connection UI in the sidebar"""
     st.sidebar.subheader("Hashnode Settings")
 
     if st.session_state.hashnode_user_info:
-        st.sidebar.success(f"Connected as: {st.session_state.hashnode_user_info.get('name', '')}")
-        st.sidebar.write(f"Username: @{st.session_state.hashnode_user_info.get('username', '')}")
+        st.sidebar.success(
+            f"Connected as: {st.session_state.hashnode_user_info.get('name', '')}")
+        st.sidebar.write(
+            f"Username: @{st.session_state.hashnode_user_info.get('username', '')}")
 
         if st.sidebar.button("Disconnect Hashnode"):
             st.session_state.hashnode_user_info = None
@@ -58,7 +64,8 @@ def render_hashnode_connection():
             st.rerun()
     else:
         st.sidebar.write("### Connect to Hashnode")
-        st.sidebar.info("Make sure you're using a Personal Access Token from your Hashnode Developer Settings")
+        st.sidebar.info(
+            "Make sure you're using a Personal Access Token from your Hashnode Developer Settings")
 
         # Hashnode API Key input with expanded help text
         input_hashnode_api_key = st.sidebar.text_input(
@@ -78,7 +85,8 @@ def render_hashnode_connection():
 
         # Show warning if field is empty
         if not input_hashnode_publication_id:
-            st.sidebar.warning("Publication ID is required for publishing. You won't be able to publish without providing this.")
+            st.sidebar.warning(
+                "Publication ID is required for publishing. You won't be able to publish without providing this.")
 
         if st.sidebar.button("Where to find my Publication ID?"):
             st.sidebar.info("""
@@ -104,7 +112,9 @@ def render_hashnode_connection():
                 st.session_state.hashnode_user_info = user_info
                 st.session_state.hashnode_api_key = input_hashnode_api_key
                 st.session_state.hashnode_publication_id = input_hashnode_publication_id
-                st.sidebar.success(f"Connected as: {user_info.get('name', '')}")
+                st.sidebar.success(
+                    f"Connected as: {user_info.get('name', '')}")
                 st.rerun()
             else:
-                st.sidebar.error("Failed to connect to Hashnode. Check your API key and try again.")
+                st.sidebar.error(
+                    "Failed to connect to Hashnode. Check your API key and try again.")
