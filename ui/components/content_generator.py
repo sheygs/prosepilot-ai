@@ -112,7 +112,7 @@ def render_content_generator_(api_key, content_type, model, temperature):
 def render_content_generator(api_key, content_type, model, temperature):
     """Render the content generation UI with RAG enhancement"""
     st.markdown("""
-        <h1 style='font-size: 28px; font-family: "Playfair Display", serif; font-weight: 400; letter-spacing: 0.5px; color: #2E5077;'>
+        <h1 style='font-size: 28px; font-family: "Playfair Display", serif; font-weight: 400; letter-spacing: 0.5px; color: #fff;'>
             From Concept to Published Content in mins 🚀
         </h1>
         """, unsafe_allow_html=True)
