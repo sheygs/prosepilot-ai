@@ -1,3 +1,4 @@
+from typing import Any
 import streamlit as st
 from api.hashnode_client import HashnodeClient
 from utils.masking import mask_sensitive_id
@@ -65,7 +66,7 @@ def render_publisher(user_prompt) -> None:
                         "Hashnode's API requires a valid publication ID for publishing content.")
 
 
-def render_publication_selector():
+def render_publication_selector() -> (Any | str | None):
     """Render the publication selection UI and return the selected publication ID"""
     st.write("### Publication Settings")
     st.warning("⚠️ A publication ID is REQUIRED for publishing to Hashnode.")
@@ -120,7 +121,7 @@ def render_publication_selector():
     return selected_pub_id
 
 
-def render_tag_selector():
+def render_tag_selector() -> list[Any]:
     """Render the tag selection UI and return the selected tag IDs"""
     # Get available tags from Hashnode
     tag_search = st.text_input("Search for tags")

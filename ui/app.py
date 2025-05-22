@@ -15,7 +15,7 @@ def setup_page() -> None:
     )
 
 
-def run_app():
+def run_app() -> None:
     """Main application entry point"""
     # Set up page configuration
     setup_page()

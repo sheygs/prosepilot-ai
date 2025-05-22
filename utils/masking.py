@@ -23,7 +23,7 @@ def mask_sensitive_id(id_string: str) -> str:
     return f"{id_string[:5]}...{id_string[-5:]}" if len(id_string) > 10 else "****"
 
 
-def mask_api_response(response_text):
+def mask_api_response(response_text) -> str:
     """Mask potentially sensitive IDs in API responses"""
     # Match patterns that look like IDs (hexadecimal or UUID-like)
     id_pattern = r'[0-9a-f]{24}'
