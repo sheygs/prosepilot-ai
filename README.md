@@ -1,25 +1,50 @@
 # ProsePilot AI
 
-A full-stack AI content generation tool built with Python and Streamlit that allows you to create and publish blog posts directly to publishing platforms.
+A full-stack AI content generation tool built with Python and Streamlit that combines RAG (Retrieval-Augmented Generation) with OpenAI's language models to create professional, high-quality content and publish directly to publishing platforms.
 
-## Overview
+## 🌫️ Overview
 
-ProsePilot AI Agent helps you rapidly generate high-quality content using OpenAI's powerful language models and publish it directly to your Hashnode blog with just a few clicks. Perfect for technical writers, developers, and content creators looking to streamline their content workflow.
+ProsePilot AI is an intelligent writing assistant that transforms your ideas into polished, publishable content in minutes. By combining OpenAI's powerful language models with a comprehensive knowledge base of writing best practices, SEO optimization, and platform-specific guidelines, ProsePilot AI ensures every piece of content meets professional standards.
 
-## Architecture
+Perfect for technical writers, developers, bloggers, and content creators looking to streamline their content workflow while maintaining quality.
+
+## 🏛️ Architecture
+
+_Enhanced architecture featuring RAG (Retrieval-Augmented Generation) for intelligent content creation_
 
 ![ProsePilot Architecture](./architecture.png)
 
-## Features
+## ✨ Features
 
-- **AI-Powered Content Generation**: Create blog posts, tutorials, and technical articles with OpenAI
-- **Hashnode Direct Publishing**: Publish content as drafts directly to your Hashnode blog
-- **Content Type Customization**: Generate different types of content with various tones and lengths
+### **AI-Powered Content Generation with RAG Enhancement**
+
+- **Intelligent Context Retrieval**: Automatically enhances prompts with relevant writing guidelines, SEO tips, and best practices
+- **Professional Structure**: Content follows industry-standard structures for different content types
+- **SEO Optimization**: Built-in SEO best practices and keyword optimization
+- **Platform Optimization**: Hashnode-specific formatting and publishing guidelines
+
+### **Content Types & Customization**
+
+- **Multiple Content Types**: Blog posts, technical articles, tutorials, opinion pieces, and custom content
+- **Tone Adaptation**: Professional, casual, enthusiastic, informative, and technical tones
+- **Smart Length Control**: Intelligent word count management with post-processing enforcement
+- **Quality Analysis**: Real-time content analysis with scoring for structure, SEO, and readability
+
+### **Publishing & Export**
+
+- **Direct Hashnode Publishing**: Publish content as drafts directly to your Hashnode blog
 - **Multiple Export Options**: Download content as Markdown or text files
-- **Conversation History**: Track your content generation sessions
-- **User-Friendly Interface**: Clean, intuitive Streamlit interface
+- **Content Analysis Dashboard**: Detailed metrics and quality scores
+- **Conversation History**: Track and review your content generation sessions
 
-## Requirements
+### **Enhanced User Experience**
+
+- **RAG-Enhanced Generation**: Writing guidelines and best practices automatically applied
+- **Content Quality Scoring**: Structure, SEO, and readability analysis
+- **Smart Image Reference Removal**: Automatic cleanup of unwanted image attributions
+- **Security Features**: Masked API keys and sensitive data protection
+
+## 📦 Requirements
 
 - Python 3.7+
 - OpenAI API key
@@ -86,24 +111,36 @@ streamlit run main.py
 
 Your web browser should open automatically to `http://localhost:8501`.
 
-## Usage Guide
+## 🚀 Usage Guide
 
-### Generating Content
+### Enhanced Content Generation
 
-1. Enter your OpenAI API key in the sidebar
-2. Select content type, model, and temperature
-3. Enter a prompt describing what content you want to generate
-4. Select tone and maximum word count
-5. Click "Generate Content"
+1. **Setup**: Enter your OpenAI API key in the sidebar
+2. **Connect to Hashnode**: Add your Hashnode API key and publication ID
+3. **Configure Content**:
+   - Select content type (Blog Post, Technical Article, Tutorial, etc.)
+   - Choose tone and writing style
+   - Set maximum word count
+4. **Generate**: Enter your prompt and click "Generate Enhanced Content"
+5. **Review Quality**: Check the content analysis scores for structure, SEO, and readability
 
 ### Publishing to Hashnode
 
-1. Connect your Hashnode account by entering your API key and publication ID
-2. After generating content, provide a title and optional subtitle
-3. Search for and select relevant tags if desired
-4. Click "Publish to Hashnode"
-5. Your content will be created as a draft in your Hashnode publication
-6. Go to your Hashnode dashboard to review and publish the draft
+1. **Review Generated Content**: Ensure quality scores meet your standards
+2. **Add Publishing Details**:
+   - Enter title and optional subtitle
+   - Search and select relevant tags
+   - Choose target publication (if you have multiple)
+3. **Publish**: Click "Publish to Hashnode" to create a draft
+4. **Final Review**: Go to your Hashnode dashboard to review and publish the draft
+
+### Content Quality Features
+
+- **Overall Quality Score**: Comprehensive scoring out of 100
+- **Structure Analysis**: Checks content organization and flow
+- **SEO Optimization**: Validates SEO elements and keyword usage
+- **Readability Assessment**: Analyzes sentence structure and complexity
+- **Platform Readiness**: Ensures Hashnode-compatible formatting
 
 ## Important Notes
 
@@ -112,7 +149,31 @@ Your web browser should open automatically to `http://localhost:8501`.
 - **API Key Security**: Your API keys are masked in the interface for security
 - **Content Length**: Be mindful of token limits in the OpenAI models when generating long content
 
-## Deployment Options
+## 🪜 Project Structure
+
+```
+prosepilot-ai/
+├── main.py                     # entry point
+├── config/
+│   └── settings.py            # configs
+├── api/
+│   ├── openai_client.py       # OpenAI integration with RAG
+│   └── hashnode_client.py     # Hashnode API integration
+├── knowledge/                 # RAG System
+│   ├── rag_system.py         # RAG implementation and context retrieval
+│   ├── content_knowledge.py  # writing guidelines and best practices
+│   └── embeddings_store.py   # vector storage for semantic search
+├── models/
+│   └── content.py            # Data models for content structure
+├── utils/
+│   └── masking.py            # security utilities
+└── ui/
+    ├── app.py                # Main UI controller
+    ├── components/           # UI components
+    └── state/               # session state management
+```
+
+## ☁️ Deployment Options
 
 ### Streamlit Cloud
 
@@ -131,21 +192,36 @@ docker build -t prosepilot-ai .
 docker run -p 8501:8501 prosepilot-ai
 ```
 
-## Troubleshooting
+## 🔧 Troubleshooting
 
+### Common Issues
+
+- **Word Limit Exceeded**: The app now includes intelligent word count enforcement
 - **Authentication Errors**: Ensure your API keys have the correct permissions
-- **Publication ID Issues**: Verify you're using the correct publication ID format
+- **Publication ID Issues**: Use the "Load My Publications" feature for automatic detection
 - **Content Generation Errors**: Check OpenAI API quota and token limits
-- **Hashnode API Changes**: The Hashnode API may change over time; check for updates
+- **Image References**: Unwanted image attributions are automatically removed
+
+### API Changes
+
+- **Hashnode API**: Uses the latest GraphQL endpoint (`gql.hashnode.com`)
+- **Content Analysis**: Enhanced analysis provides detailed quality metrics
+- **Security**: All sensitive data is masked in the interface
+
+## Improvement Points
+
+- **Knowledge Base Expansion**: Add more writing guidelines and best practices
+- **New Content Types**: Implement support for additional content formats
+- **Platform Integration**: Add support for other publishing platforms
+- **UI Enhancements**: Improve the user interface and experience
+- **Performance Optimization**: Enhance the RAG system for better performance
 
 ## License
 
 This project is available under the MIT License.
 
-## Contributing
+## 💪 Acknowledgments
 
-Contributions are welcome! Feel free to submit issues or pull requests.
-
----
-
-Created with ❤️ using Python, Streamlit, OpenAI, and Hashnode API.
+- **OpenAI** for providing powerful language models
+- **Hashnode** for the publishing platform and API
+- **Streamlit** for the excellent web framework
