@@ -26,5 +26,5 @@ RAG_SIMILARITY_THRESHOLD = 0.7
 
 # UI Settings
 PAGE_TITLE = "ProsePilot AI"
-PAGE_ICON = "✍️"
+PAGE_ICON = "📝"
 LAYOUT = "wide"

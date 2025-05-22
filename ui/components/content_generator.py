@@ -1,10 +1,11 @@
+from typing import Any
 import streamlit as st
 from datetime import datetime
 from models.content import ContentItem
 from api.openai_client import EnhancedOpenAIClient
 
 
-def render_content_generator(api_key, content_type, model, temperature):
+def render_content_generator(api_key, content_type, model, temperature) -> dict[str, Any]:
     """Render the content generation UI with RAG enhancement"""
 
     st.markdown(
@@ -121,7 +122,7 @@ def render_content_generator(api_key, content_type, model, temperature):
     }
 
 
-def render_conversation_history():
+def render_conversation_history() -> None:
     """Render the conversation history"""
     if st.session_state.conversation_history:
         with st.expander("Conversation History", expanded=False):

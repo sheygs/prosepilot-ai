@@ -2,7 +2,7 @@ import streamlit as st
 from config.settings import HASHNODE_API_KEY, HASHNODE_PUBLICATION_ID
 
 
-def initialize_session_state():
+def initialize_session_state() -> None:
     """Initialize all session state variables"""
     if "generated_content" not in st.session_state:
         st.session_state.generated_content = ""

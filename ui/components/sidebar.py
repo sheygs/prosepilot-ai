@@ -1,9 +1,10 @@
+from typing import Any
 import streamlit as st
 from api.hashnode_client import HashnodeClient
 from config.settings import OPENAI_API_KEY
 
 
-def render_sidebar():
+def render_sidebar() -> dict[str, Any]:
     """Render the sidebar UI"""
     st.sidebar.title("ProsePilot AI")
 
@@ -23,7 +24,7 @@ def render_sidebar():
 
     # Model selection
     model = st.sidebar.selectbox(
-        "Select Model",
+        "Select model",
         ["gpt-3.5-turbo", "gpt-4.1"]
     )
 
@@ -48,7 +49,7 @@ def render_sidebar():
     }
 
 
-def render_hashnode_connection():
+def render_hashnode_connection() -> None:
     """Render the Hashnode connection UI in the sidebar"""
     st.sidebar.subheader("Hashnode Settings")
 

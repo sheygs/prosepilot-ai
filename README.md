@@ -70,7 +70,7 @@ pip3 install -r requirements.txt
 
 ### 2. API Keys Setup
 
-Rename `.env.sample` file to `.env` file in the project directory and populate the required placeholders:
+Rename `.env.dev` file to `.env` file in the project directory and populate the required placeholders:
 
 ```
 OPENAI_API_KEY=your_openai_api_key_here
@@ -121,7 +121,7 @@ Your web browser should open automatically to `http://localhost:8501`.
    - Select content type (Blog Post, Technical Article, Tutorial, etc.)
    - Choose tone and writing style
    - Set maximum word count
-4. **Generate**: Enter your prompt and click "Generate Enhanced Content"
+4. **Generate**: Enter your prompt and click "Generate Content"
 5. **Review Quality**: Check the content analysis scores for structure, SEO, and readability
 
 ### Publishing to Hashnode
@@ -153,13 +153,13 @@ Your web browser should open automatically to `http://localhost:8501`.
 
 ```
 prosepilot-ai/
-├── main.py                     # entry point
+├── main.py                   # entry point
 ├── config/
-│   └── settings.py            # configs
+│   └── settings.py           # configs
 ├── api/
-│   ├── openai_client.py       # OpenAI integration with RAG
-│   └── hashnode_client.py     # Hashnode API integration
-├── knowledge/                 # RAG System
+│   ├── openai_client.py      # OpenAI integration with RAG
+│   └── hashnode_client.py    # Hashnode API integration
+├── knowledge/                # RAG System
 │   ├── rag_system.py         # RAG implementation and context retrieval
 │   ├── content_knowledge.py  # writing guidelines and best practices
 │   └── embeddings_store.py   # vector storage for semantic search
@@ -170,17 +170,16 @@ prosepilot-ai/
 └── ui/
     ├── app.py                # Main UI controller
     ├── components/           # UI components
-    └── state/               # session state management
+    └── state/                # session state management
 ```
 
 ## ☁️ Deployment Options
 
 ### Streamlit Cloud
 
-1. Push your code to GitHub
-2. Go to [Streamlit Cloud](https://streamlit.io/cloud)
-3. Deploy your app
-4. Add your API keys as secrets
+1. Go to [Streamlit Cloud](https://streamlit.io/cloud)
+2. Deploy your app
+3. Add your API keys as secrets
 
 ### Docker
 
