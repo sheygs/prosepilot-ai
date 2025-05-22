@@ -36,7 +36,7 @@ git clone https://github.com/sheygs/prosepilot-ai.git
 cd prosepilot-ai
 
 # Create and activate a virtual environment
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate  # On Windows, use: venv\Scripts\activate
 
 # Install dependencies
