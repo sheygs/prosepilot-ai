@@ -34,12 +34,11 @@ def render_content_generator(api_key, content_type, model, temperature) -> dict[
         # RAG enhancement indicator
         st.info("🧠 RAG Enhancement: ON\nUsing writing best practices and guidelines")
 
-    # Generate button
     generate_pressed = st.button("Generate Content")
 
     # Generate content when the button is pressed
     if generate_pressed and user_prompt:
-        with st.spinner("Generating content with RAG enhancement..."):
+        with st.spinner("Generating content with RAG enhancement.."):
             openai_client = EnhancedOpenAIClient(api_key)
             generated_text = openai_client.generate_content(
                 user_prompt, content_type, tone, max_length, model, temperature

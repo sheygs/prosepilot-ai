@@ -14,7 +14,8 @@ def render_publisher(user_prompt) -> None:
 
     # Article details
     title = st.text_input("Article Title", value=f"{user_prompt[:50]}..." if len(
-        user_prompt) > 50 else user_prompt)
+        user_prompt) > 50 else user_prompt
+    )
     subtitle = st.text_input("Subtitle (optional)")
 
     # Publication selection
@@ -66,12 +67,11 @@ def render_publisher(user_prompt) -> None:
                         "Hashnode's API requires a valid publication ID for publishing content.")
 
 
-def render_publication_selector() -> (Any | str | None):
+def render_publication_selector():
     """Render the publication selection UI and return the selected publication ID"""
     st.write("### Publication Settings")
     st.warning("⚠️ A publication ID is REQUIRED for publishing to Hashnode.")
 
-    # Publication ID input field (required)
     manual_pub_id = st.text_input(
         "Publication ID *",
         value=st.session_state.hashnode_publication_id,
@@ -130,11 +130,15 @@ def render_tag_selector() -> list[Any]:
     if tag_search:
         hashnode_client = HashnodeClient(st.session_state.hashnode_api_key)
         available_tags = hashnode_client.get_tags(tag_search)
+
         if available_tags:
             tag_options = {tag["name"]: tag["_id"] for tag in available_tags}
+
             selected_tags = st.multiselect(
-                "Select tags", options=list(tag_options.keys()))
+                "Select tags", options=list(tag_options.keys())
+            )
             selected_tag_ids = [tag_options[tag] for tag in selected_tags]
+
             st.info("You can select up to 5 tags")
         else:
             st.info("No tags found. Try another search term.")
