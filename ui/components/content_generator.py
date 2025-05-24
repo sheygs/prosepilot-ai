@@ -18,13 +18,13 @@ def render_content_generator(api_key, content_type, model, temperature) -> dict[
     )
 
     # Input section
-    prompt_col1, prompt_col2 = st.columns([3, 1])
+    prompt_column1, prompt_column2 = st.columns([3, 1])
 
-    with prompt_col1:
+    with prompt_column1:
         user_prompt = st.text_area(
             "What content would you like to generate?", height=100)
 
-    with prompt_col2:
+    with prompt_column2:
         st.write("Content Parameters")
         tone = st.selectbox(
             "Tone", ["Professional", "Casual", "Enthusiastic", "Informative", "Technical"])
@@ -72,15 +72,15 @@ def render_content_generator(api_key, content_type, model, temperature) -> dict[
                     f"Overall Quality Score: {analysis['overall_quality']}/100")
 
                 # Detailed metrics
-                col1, col2, col3, col4 = st.columns(4)
-                with col1:
+                column1, column2, column3, column4 = st.columns(4)
+                with column1:
                     st.metric("Word Count", analysis["word_count"])
-                with col2:
+                with column2:
                     st.metric("Structure Score",
                               f"{analysis['structure_score']}/100")
-                with col3:
+                with column3:
                     st.metric("SEO Score", f"{analysis['seo_score']}/100")
-                with col4:
+                with column4:
                     st.metric("Readability",
                               f"{analysis['readability_score']}/100")
 
@@ -91,13 +91,13 @@ def render_content_generator(api_key, content_type, model, temperature) -> dict[
                     st.json(analysis["readability_details"])
 
         # Actions row
-        col1, col2, col3 = st.columns(3)
+        column1, column2, column3 = st.columns(3)
 
-        with col1:
+        with column1:
             st.button("Copy to Clipboard",
                       help="Copy the generated content to clipboard")
 
-        with col2:
+        with column2:
             st.download_button(
                 label="Download as TXT",
                 data=st.session_state.generated_content,
@@ -105,7 +105,7 @@ def render_content_generator(api_key, content_type, model, temperature) -> dict[
                 mime="text/plain"
             )
 
-        with col3:
+        with column3:
             st.download_button(
                 label="Download as MD",
                 data=st.session_state.generated_content,

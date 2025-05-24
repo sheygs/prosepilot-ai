@@ -29,13 +29,15 @@ def render_publisher(user_prompt) -> None:
 
     if publish_button_disabled:
         st.error(
-            "Cannot publish without a publication ID. Please enter a publication ID or select one above.")
+            "Cannot publish without a publication ID. Please enter a publication ID or select one above."
+        )
         st.button("Publish to Hashnode", disabled=True)
     else:
         if st.button("Publish to Hashnode"):
             with st.spinner("Publishing to Hashnode..."):
                 hashnode_client = HashnodeClient(
-                    st.session_state.hashnode_api_key)
+                    st.session_state.hashnode_api_key
+                )
                 post_result = hashnode_client.create_draft(
                     title=title,
                     content=st.session_state.generated_content,
@@ -54,17 +56,22 @@ def render_publisher(user_prompt) -> None:
                         st.write(f"Last updated: {post_result['updatedAt']}")
 
                     username = st.session_state.hashnode_user_info.get(
-                        "username")
+                        "username"
+                    )
                     if username:
                         st.write(
-                            f"Once published, you can view your post at: https://{username}.hashnode.dev/{post_result['slug']}")
+                            f"Once published, you can view your post at: https://{username}.hashnode.dev/{post_result['slug']}"
+                        )
                         st.info(
-                            "Go to your Hashnode dashboard to publish this draft when ready.")
+                            "Go to your Hashnode dashboard to publish this draft when ready."
+                        )
                 else:
                     st.error(
-                        "Failed to publish to Hashnode. Please check your publication ID and try again.")
+                        "Failed to publish to Hashnode. Please check your publication ID and try again."
+                    )
                     st.info(
-                        "Hashnode's API requires a valid publication ID for publishing content.")
+                        "Hashnode's API requires a valid publication ID for publishing content."
+                    )
 
 
 def render_publication_selector():

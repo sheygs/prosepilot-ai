@@ -17,11 +17,13 @@ class OpenAIClient:
         try:
             openai.api_key = self.api_key
 
-            system_message = f"""You are an expert content creator specialized in creating {content_type}s.
-            Create content with a {tone.lower()} tone.
-            Keep the content under {max_length} words.
-            Format the content in Markdown.
-            Focus on quality, engagement, and relevance."""
+            system_message = f"""
+                You are an expert content creator specialized in creating {content_type}s.
+                Create content with a {tone.lower()} tone.
+                Keep the content under {max_length} words.
+                Format the content in Markdown.
+                Focus on quality, engagement, and relevance.
+            """
 
             full_prompt = f"Create a {content_type} about: {prompt}"
 
@@ -199,6 +201,7 @@ class EnhancedOpenAIClient:
 
     def _calculate_overall_quality(self, structure_analysis: Dict, seo_analysis: Dict, readability_analysis: Dict) -> int:
         """Calculate overall content quality score"""
+
         weights = {
             "structure": 0.4,
             "seo": 0.3,
@@ -240,6 +243,7 @@ class EnhancedOpenAIClient:
 
     def _check_blog_post_structure(self, content: str, headers: int, lines: list) -> bool:
         """Check blog post specific structure"""
+
         checks = {
             'has_title': headers >= 1,  # At least one main title
             'has_sections': headers >= 3,  # Multiple sections
@@ -272,6 +276,7 @@ class EnhancedOpenAIClient:
 
     def _check_tutorial_structure(self, content: str, headers: int, lines: list) -> bool:
         """Check tutorial specific structure"""
+
         checks = {
             'has_steps': headers >= 3,  # Multiple steps/sections
             'has_numbered_items': any(line.strip().startswith(('1.', '2.', '3.'))
@@ -289,6 +294,7 @@ class EnhancedOpenAIClient:
 
     def _check_opinion_piece_structure(self, content: str, headers: int, lines: list) -> bool:
         """Check opinion piece specific structure"""
+
         checks = {
             'has_clear_position': any(keyword in content.lower()
                                       for keyword in ['believe', 'think', 'opinion', 'argue', 'position']),
@@ -307,6 +313,7 @@ class EnhancedOpenAIClient:
 
     def _check_default_structure(self, content: str, headers: int, lines: list) -> bool:
         """Default structure check for custom content types"""
+
         checks = {
             'has_headers': headers >= 2,
             'reasonable_length': len(lines) >= 8,

@@ -6,7 +6,7 @@ from .content_knowledge import WRITING_GUIDELINES, TONE_GUIDELINES, CONTENT_EXAM
 
 class RAGSystem:
     """
-    Simple RAG implementation using keyword matching and content relevance.
+    RAG implementation using keyword matching and content relevance.
     Can be enhanced later with vector embeddings for more sophisticated retrieval.
     """
 

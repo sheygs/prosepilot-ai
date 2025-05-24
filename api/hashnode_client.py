@@ -86,18 +86,19 @@ class HashnodeClient:
                 if "data" in result and "me" in result["data"] and "publications" in result["data"]["me"]:
                     publications = result["data"]["me"]["publications"]["edges"]
 
-                    pub_list = []
+                    publications_list = []
+
                     for pub in publications:
-                        pub_list.append({
+                        publications_list.append({
                             "id": pub["node"]["id"],
                             "title": pub["node"]["title"],
                             "isDefault": pub["node"].get("isDefault", False)
                         })
 
-                    pub_list.sort(key=lambda x: (
+                    publications_list.sort(key=lambda x: (
                         0 if x["isDefault"] else 1, x["title"]))
 
-                    return pub_list
+                    return publications_list
                 else:
                     # Mask sensitive data
                     result_copy = result.copy()
@@ -135,6 +136,7 @@ class HashnodeClient:
 
             if response.status_code == 200:
                 result = response.json()
+
                 if "data" in result and "tagCategories" in result["data"]:
                     return result["data"]["tagCategories"]
 
@@ -147,7 +149,8 @@ class HashnodeClient:
         """Create a draft post on Hashnode"""
         if not publication_id or not publication_id.strip():
             st.error(
-                "Publication ID is required. Please provide a valid publication ID.")
+                "Publication ID is required. Please provide a valid publication ID."
+            )
             return False
 
         if tags is None:
@@ -164,7 +167,7 @@ class HashnodeClient:
             input_vars["subtitle"] = subtitle
 
         mutation = """
-            mutation createDraft($input: CreateDraftInput!){
+            mutation createDraft($input: CreateDraftInput!) {
                 createDraft(input: $input) {
                     draft {
                         id
@@ -181,7 +184,8 @@ class HashnodeClient:
             debug_vars = input_vars.copy()
             if "publicationId" in debug_vars:
                 debug_vars["publicationId"] = mask_sensitive_id(
-                    debug_vars["publicationId"])
+                    debug_vars["publicationId"]
+                )
             st.write("Sending input variables:", debug_vars)
 
             response = requests.post(
