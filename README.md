@@ -8,7 +8,7 @@ ProsePilot AI is an intelligent writing assistant that transforms your ideas int
 
 Perfect for technical writers, developers, bloggers, and content creators looking to streamline their content workflow while maintaining quality.
 
-## 🏛️ Architecture
+## 🏗️ Architecture
 
 _Enhanced architecture featuring RAG (Retrieval-Augmented Generation) for intelligent content creation_
 
