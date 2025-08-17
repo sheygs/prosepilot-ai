@@ -11,10 +11,7 @@ class HashnodeClient:
 
     def _get_headers(self):
         """Get headers for API requests"""
-        return {
-            "Content-Type": "application/json",
-            "Authorization": self.api_key
-        }
+        return {"Content-Type": "application/json", "Authorization": self.api_key}
 
     def authenticate(self):
         """Authenticate with Hashnode"""
@@ -33,9 +30,7 @@ class HashnodeClient:
 
         try:
             response = requests.post(
-                self.graphql_url,
-                json={"query": query},
-                headers=self._get_headers()
+                self.graphql_url, json={"query": query}, headers=self._get_headers()
             )
 
             st.write(f"Response status: {response.status_code}")
@@ -75,28 +70,35 @@ class HashnodeClient:
 
         try:
             response = requests.post(
-                self.graphql_url,
-                json={"query": query},
-                headers=self._get_headers()
+                self.graphql_url, json={"query": query}, headers=self._get_headers()
             )
 
             if response.status_code == 200:
                 result = response.json()
 
-                if "data" in result and "me" in result["data"] and "publications" in result["data"]["me"]:
+                if (
+                    "data" in result
+                    and "me" in result["data"]
+                    and "publications" in result["data"]["me"]
+                ):
                     publications = result["data"]["me"]["publications"]["edges"]
 
                     publications_list = []
 
-                    for pub in publications:
-                        publications_list.append({
-                            "id": pub["node"]["id"],
-                            "title": pub["node"]["title"],
-                            "isDefault": pub["node"].get("isDefault", False)
-                        })
+                    for publication in publications:
+                        publications_list.append(
+                            {
+                                "id": publication["node"]["id"],
+                                "title": publication["node"]["title"],
+                                "isDefault": publication["node"].get(
+                                    "isDefault", False
+                                ),
+                            }
+                        )
 
-                    publications_list.sort(key=lambda x: (
-                        0 if x["isDefault"] else 1, x["title"]))
+                    publications_list.sort(
+                        key=lambda x: (0 if x["isDefault"] else 1, x["title"])
+                    )
 
                     return publications_list
                 else:
@@ -122,16 +124,13 @@ class HashnodeClient:
             }
         """
 
-        variables = {
-            "page": 0,
-            "query": search_text
-        }
+        variables = {"page": 0, "query": search_text}
 
         try:
             response = requests.post(
                 self.graphql_url,
                 json={"query": query, "variables": variables},
-                headers=self._get_headers()
+                headers=self._get_headers(),
             )
 
             if response.status_code == 200:
@@ -145,7 +144,9 @@ class HashnodeClient:
             st.error(f"Error getting Hashnode tags: {str(e)}")
             return []
 
-    def create_draft(self, title, content, tags=None, publication_id=None, subtitle=None):
+    def create_draft(
+        self, title, content, tags=None, publication_id=None, subtitle=None
+    ):
         """Create a draft post on Hashnode"""
         if not publication_id or not publication_id.strip():
             st.error(
@@ -160,7 +161,7 @@ class HashnodeClient:
             "title": title,
             "contentMarkdown": content,
             "tags": tags,
-            "publicationId": publication_id
+            "publicationId": publication_id,
         }
 
         if subtitle and subtitle.strip():
@@ -180,18 +181,20 @@ class HashnodeClient:
         """
 
         try:
-            # Create a copy with masked publication ID for display
+            # Create a copy with masked publication ID
             debug_vars = input_vars.copy()
+
             if "publicationId" in debug_vars:
                 debug_vars["publicationId"] = mask_sensitive_id(
                     debug_vars["publicationId"]
                 )
-            st.write("Sending input variables:", debug_vars)
+
+            st.write("Sending input variables: ", debug_vars)
 
             response = requests.post(
                 self.graphql_url,
                 json={"query": mutation, "variables": {"input": input_vars}},
-                headers=self._get_headers()
+                headers=self._get_headers(),
             )
 
             st.write(f"Response status: {response.status_code}")
@@ -204,7 +207,11 @@ class HashnodeClient:
                 mask_publication_ids(result_copy)
                 st.write("API response structure:", result_copy)
 
-                if "data" in result and "createDraft" in result["data"] and "draft" in result["data"]["createDraft"]:
+                if (
+                    "data" in result
+                    and "createDraft" in result["data"]
+                    and "draft" in result["data"]["createDraft"]
+                ):
                     return result["data"]["createDraft"]["draft"]
 
             st.error(f"Error posting to Hashnode: {response.text}")
